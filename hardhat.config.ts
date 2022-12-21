@@ -6,22 +6,29 @@ require('dotenv').config();
 
 const {
   SEPOLIA_URL,
+  INFURA_KEY,
   PRIVATE_KEY,
+  ETHERSCAN_API_KEY,
 } = process.env;
 
 const config: HardhatUserConfig = {
   solidity: "0.8.17",
   networks: {
-    sepolia: {     
-      url: SEPOLIA_URL,      
-      accounts: [`0x${PRIVATE_KEY}`],   
+    // sepolia: {     
+    //   url: SEPOLIA_URL,      
+    //   accounts: [`0x${PRIVATE_KEY}`],   
+    // },
+    sepolia: {
+      url: SEPOLIA_URL || `https://sepolia.infura.io/v3/${INFURA_KEY}`,
+      accounts:
+        PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
     },
   },
-  etherscan: {
-    apiKey: {
-      sepolia: 'GA7YG6PUPUGWM2H9E2V1X7J7J8HGK8M3C3'
-    }
-  }
+  // etherscan: {
+  //   apiKey: {
+  //     sepolia: ETHERSCAN_API_KEY !== undefined ? [ETHERSCAN_API_KEY] : [],
+  //   }
+  // }
 };
 
 export default config;
